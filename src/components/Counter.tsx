@@ -6,7 +6,6 @@
  * 4. Counterコンポーネントに何らかの変更を加え、再度Chromaticにパブリッシュし、
  *    差分が正しく検出されることを確認してください
  */
-
 import { useState } from "react";
 
 interface CounterProps {

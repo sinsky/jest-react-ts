@@ -4,9 +4,8 @@
  * 1. 入力フィールドに値を入力し、検索ボタンをクリックすると適切なAPIリクエストが発生する
  * 2. APIから取得したユーザー情報が正しく画面に表示される
  */
-
-import { useState } from "react";
 import axios from "axios";
+import { useState } from "react";
 
 interface User {
   id: number;
