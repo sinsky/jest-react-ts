@@ -6,8 +6,8 @@ interface ButtonProps {
 
 const Button: React.FC<ButtonProps> = ({ label, primary, onClick }) => {
   const buttonStyle = primary
-    ? { backgroundColor: "blue", color: "white" }
-    : { backgroundColor: "white", color: "blue" };
+    ? { backgroundColor: "darkblue", color: "white" }
+    : { backgroundColor: "white", color: "darkblue" };
   return (
     <button style={buttonStyle} onClick={onClick}>
       {label}
