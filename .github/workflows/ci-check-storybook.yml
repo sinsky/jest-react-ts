@@ -1,0 +1,41 @@
+name: "UI Tests"
+
+on: push
+
+jobs:
+  # Run interaction and accessibility tests
+  interaction-and-accessibility:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+      - name: Install dependencies
+        run: bun install
+      - name: Install Playwright
+        run: bun x playwright install --with-deps
+      - name: Build Storybook
+        run: bun run build-storybook --quiet
+      - name: Serve Storybook and run tests
+        run: |
+          bun x concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+            "bun x http-server storybook-static --port 6006 --silent" \
+            "bun x wait-on tcp:6006 && bun run test-storybook"
+  # Run visual and composition tests with Chromatic
+  visual-and-composition:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # Required to retrieve git history
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+      - name: Install dependencies
+        run: bun install
+      - name: Publish to Chromatic
+        uses: chromaui/action@v1
+        with:
+          # Grab this from the Chromatic manage page
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
